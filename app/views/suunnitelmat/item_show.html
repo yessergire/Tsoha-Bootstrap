@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Tuote 1</h1>
+
+<p>
+    <button class="btn btn-danger">Poista</button> <a href="{{base_path}}/items/1/edit" class="btn btn-default">Muokkaa</a>
+</p>
+
+<div class="media panel panel-default">
+    <div class="media-left">
+        <img src="http://placehold.it/400x300">
+    </div>
+    <div class="media-body">
+        <div class="media-heading">
+            <h3><strong>Korkein tarjous:</strong> 50€</h3>
+        </div>
+        <form class="form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="exampleInputAmount" value="60">
+                    <div class="input-group-addon">€</div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Jätä tarjous</button>
+        </form>
+        
+        <h4><strong>Tarjouksia 3:</strong></h4>
+        <table  class="table">
+            <tr>
+                <th>1.</th>
+                <td>01.11.2015 klo 07:00:00</td>
+                <td>10€</td>
+            </tr>
+            <tr>
+                <th>2.</th>
+                <td>03.11.2015 klo 08:00:00</td>
+                <td>25€</td>
+            </tr>
+            <tr>
+                <th>3.</th>
+                <td>05.11.2015 klo 09:00:00</td>
+                <td>50€</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+<p>
+    TUOTTEEN KUVAUS
+</p>
+{% endblock %}

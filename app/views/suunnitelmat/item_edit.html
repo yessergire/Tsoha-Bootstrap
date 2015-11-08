@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Muokkaa tuotetta 'Tuote 1'</h1>
+<form>
+    <div class="form-group">
+        <label for="name">Nimi</label>
+        <input type="text" class="form-control" value="Tuote 1">
+    </div>
+    <div class="form-group">
+        <label for="picture">Kuvaus</label>
+        <textarea class="form-control" rows="5">Kuvaus</textarea>
+    </div>
+    <div class="form-group">
+        <label for="picture">Kuva</label>
+        <input type="file">
+    </div>
+    <button type="submit" class="btn btn-primary">Tallenna</button>
+</form>
+{% endblock %}

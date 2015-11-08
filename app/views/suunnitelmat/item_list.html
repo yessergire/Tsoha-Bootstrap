@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Tuotelista</h1>
+    </div>
+
+    <ul class="media-list list-group">
+        <li class="media list-group-item">
+            <div class="media-left">
+                    <img src="http://placehold.it/350x150">
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="{{base_path}}/items/1">Tuote 1</a>
+                </h3>
+                <p>Tarjouksia 3.</p>
+                <p>Korkein tarjous: 50€</p>
+            </div>
+        </li>
+
+        <li class="media list-group-item">
+            <div class="media-left">
+                    <img src="http://placehold.it/350x150">
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="#">Tuote 2</a>
+                </h3>
+                <p>Ei vielä tarjouksia.</p>
+                <p>Lähtöhinta 10€</p>
+            </div>
+        </li>
+    </ul>
+</div>
+
+{% endblock %}
