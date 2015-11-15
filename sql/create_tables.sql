@@ -16,8 +16,8 @@ CREATE TABLE Meklari (
 
 CREATE TABLE Tuote (
   id SERIAL  PRIMARY KEY,
-  nimi       VARCHAR(60)  NOT NULL,         -- Nimi
-  kuvaus     VARCHAR(120) NOT NULL,         -- Kuvaus
+  nimi       VARCHAR(120)  NOT NULL,         -- Nimi
+  kuvaus     VARCHAR(5000) NOT NULL,         -- Kuvaus
   kuva       VARCHAR(2000),                 -- Kuvan url osoite
   hinta      FLOAT        NOT NULL          -- Hinta
 );

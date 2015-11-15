@@ -21,6 +21,7 @@
         // Tulostetaan Twig:n renderöimä näkymä
         echo $twig->render($view, $content);
       } catch (Exception $e){
+          Kint::dump($e);
         die('Virhe näkymän näyttämisessä: ' . $e->getMessage());
       }
 

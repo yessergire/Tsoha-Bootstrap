@@ -23,7 +23,10 @@ class HelloWorldController extends BaseController {
         View::make('login.html');
     }
     public static function sandbox() {
-        echo 'Hello world!';
+        $tv = Item::find(1);
+        $items = Item::all();
+        Kint::dump($tv);
+        Kint::dump($items);
     }
 
 }

@@ -5,11 +5,19 @@
   });
   
   $routes->get('/items', function() {
-    HelloWorldController::item_list();
+    ItemController::index();
   });
   
-  $routes->get('/items/1', function() {
-    HelloWorldController::item_show();
+  $routes->post('/items', function() {
+    ItemController::store();
+  });
+  
+  $routes->get('/items/new', function() {
+    ItemController::create();
+  });
+  
+  $routes->get('/items/:id', function($id) {
+    ItemController::show($id);
   });
   
   $routes->get('/items/1/edit', function() {
