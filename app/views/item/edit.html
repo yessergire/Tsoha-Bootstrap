@@ -12,25 +12,25 @@
     </div>
 {% endif %}
 
-<form action="{{base_path}}/items" method="post">
+<form action="{{base_path}}/items/{{item.id}}/edit" method="post">
     <div class="form-group">
         <label for="nimi">Nimi</label>
-        <input type="text" class="form-control" name="nimi">
+        <input type="text" class="form-control" value="{{item.name}}" name="nimi">
     </div>
     <div class="form-group">
         <label for="hinta">Alin hinta</label>
         <div class="input-group">
-            <input type="text" class="form-control" name="hinta">
+            <input type="text" class="form-control" value="{{item.price}}" name="hinta">
             <div class="input-group-addon">€</div>
         </div>
     </div>
     <div class="form-group">
         <label for="kuvaus">Kuvaus</label>
-        <textarea class="form-control" name="kuvaus" rows="5"></textarea>
+        <textarea class="form-control" name="kuvaus" rows="5">{{item.description}}</textarea>
     </div>
     <div class="form-group">
         <label for="kuva">Kuvan osoite</label>
-        <input type="text" class="form-control" name="kuva" placeholder="http://">
+        <input type="text" class="form-control" name="kuva" value="{{item.pictureURL}}">
     </div>
     <button type="submit" class="btn btn-primary">Tallenna</button>
 </form>

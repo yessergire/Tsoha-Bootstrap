@@ -20,10 +20,28 @@
       $errors = array();
 
       foreach($this->validators as $validator){
-        // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
+          $validator_errors = $this->{$validator}();
+          $errors = array_merge($errors, $validator_errors);
       }
 
       return $errors;
+    }
+    
+    public function validate_length($name, $length) {
+        if ($this->{$name} == null || $this->{$name} == '') {
+            return false;
+        }
+        if (strlen($this->{$name}) < $length) {
+            return false;
+        }
+        return true;
+    }
+    
+    public function validate_min($name, $min) {
+        if ($this->{$name} == null || $this->{$name} < $min) {
+            return false;
+        }
+        return true;
     }
 
   }
