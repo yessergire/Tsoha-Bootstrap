@@ -11,3 +11,7 @@ Yleisiä linkkejä:
 
 ## Työn aihe
 [Huutokauppa](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Huutokauppa.html) 
+
+## Kirjautuminen
+* [Kirjautuminen](https://abmo.users.cs.helsinki.fi/tsoha/login)
+Sivuston ylläpitäjän käyttäjätunnus on *admin* ja salasana on *salasana*.
