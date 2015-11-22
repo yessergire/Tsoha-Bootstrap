@@ -1,0 +1,21 @@
+{% macro list(base_path, items) %}
+    <ul class="media-list list-group">
+        {% for item in items %}
+        <li class="media list-group-item">
+            <div class="media-left">
+                {% if item.pictureURL != null %}
+                <img src="{{item.pictureURL}}" width="350">
+                {% else %}
+                <img src="http://placehold.it/350x150">
+                {% endif %}
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="{{base_path}}/items/{{item.id}}">{{item.name}}</a>
+                </h3>
+                <p>Alin hinta: {{item.price}} €</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}

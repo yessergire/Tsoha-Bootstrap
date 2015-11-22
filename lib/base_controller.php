@@ -10,10 +10,9 @@
     }
 
     public static function check_logged_in(){
-        if (isset($_SESSION['user'])) {
-            return true;
+        if (!isset($_SESSION['user'])) {
+            Redirect::to('/login', array('message' => 'Kirjaudu sisään ensin!'));
         }
-        return false;
     }
 
   }

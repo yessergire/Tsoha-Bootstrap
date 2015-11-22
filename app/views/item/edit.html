@@ -32,6 +32,18 @@
         <label for="kuva">Kuvan osoite</label>
         <input type="text" class="form-control" name="kuva" value="{{item.pictureURL}}">
     </div>
+    <div class="form-group">
+        <label>Tuoteluokat</label>
+        <select class="form-control" name="categories[]" multiple="">
+            {% for category in categories %}
+                {% if item in category.items %}
+                <option value="{{category.id}}" selected="">{{category.name}}</option>
+                {% else %}
+                <option value="{{category.id}}">{{category.name}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Tallenna</button>
 </form>
 {% endblock %}

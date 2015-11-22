@@ -2,6 +2,7 @@
 {% block content %}
 
 {% import "macros/forms.html" as forms %}
+{% import "macros/item_list.html" as item_list %}
 
 {% if message != null %}
 <div class="alert alert-success">
@@ -9,35 +10,13 @@
 </div>
 {% endif %}
 
-<h1>{{item.name}}</h1>
+<h1>{{category.name}}</h1>
 
 <p>
-    {{forms.destroy_button(#{base_path}/items/#{item.id}/destroy)}}
-    <a href="{{base_path}}/items/{{item.id}}/edit" class="btn btn-default">Muokkaa</a>
+    {{forms.destroy_button("#{base_path}/categories/#{category.id}")}}
 </p>
-<div class="media panel panel-default">
-    <div class="media-left">
-        {% if item.pictureURL != null %}
-        <img src="{{item.pictureURL}}" width="350">
-        {% else %}
-        <img src="http://placehold.it/350x150">
-        {% endif %}
-    </div>
-    <div class="media-body">
-        <div class="media-heading">
-            <h3><strong>Hinta:</strong> {{item.price}} €</h3>
-        </div>
-        <form class="form-inline">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="exampleInputAmount" value="{{item.price + 10}}">
-                    <div class="input-group-addon">€</div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Jätä tarjous</button>
-        </form>
-    </div>
 
-</div>
-<p>{{item.description}}</p>
+<p>{{category.description}}</p>
+
+{{item_list.list(base_path, category.items)}}
 {% endblock %}

@@ -26,6 +26,33 @@ class Item extends BaseModel {
         return $items;
     }
 
+    public static function get_categories($id) {
+        $query = DB::connection()->prepare('SELECT tuoteluokka_id FROM TuotteenLuokat '.
+                'WHERE tuote_id = :id');
+        $query->execute(array('id' => $id));
+        $rows = $query->fetchAll();
+        $categories = array();
+        foreach ($rows as $row) {
+            $categories[] = Category::find($row['tuoteluokka_id'], false);
+        }
+        return $categories;
+    }
+
+    public static function destroy_category_references($id) {
+        $query = DB::connection()->prepare('DELETE FROM TuotteenLuokat WHERE tuote_id = :id');
+        $query->execute(array('id' => $id));
+    }
+
+    public static function set_categories($id, $category_ids) {
+        self::destroy_category_references($id);
+        $query = DB::connection()->prepare('INSERT INTO TuotteenLuokat (tuote_id, tuoteluokka_id) '.
+                'VALUES (:id, :category_id)');
+        
+        foreach ($category_ids as $category_id) {
+            $query->execute(array('id' => $id, 'category_id' => $category_id));
+        }
+    }
+
     public static function find($id) {
         $query = DB::connection()->prepare('Select * from Tuote Where id = :id Limit 1');
         $query->execute(array('id' => $id));
@@ -33,12 +60,13 @@ class Item extends BaseModel {
 
         if ($row) {
             $item = new Item(array(
-                'id' => $row['id'],
+                'id' => $id,
                 'name' => $row['nimi'],
                 'description' => $row['kuvaus'],
                 'pictureURL' => $row['kuva'],
                 'price' => $row['hinta']
             ));
+            $item->categories = self::get_categories($id);
             return $item;
         }
         return null;
@@ -71,6 +99,7 @@ class Item extends BaseModel {
     }
 
     public function destroy() {
+        self::destroy_category_references($this->id);
         $query = DB::connection()->prepare('DELETE FROM Tuote WHERE ID = :id');
         $query->execute(array(
             'id' => $this->id

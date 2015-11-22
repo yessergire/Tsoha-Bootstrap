@@ -39,4 +39,14 @@
 
 </div>
 <p>{{item.description}}</p>
+
+{% if item.categories %}
+<h3>Tuoteluokat:</h3>
+<div class="list-group">
+    {% for category in item.categories %}
+        <a href="{{base_path}}/categories/{{category.id}}" class="list-group-item">{{category.name}}</a>
+    {% endfor %}
+</div>
+{% endif %}
+
 {% endblock %}

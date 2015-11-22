@@ -1,37 +1,35 @@
 <?php
 
-class ItemController extends BaseController {
+class CategoryController extends BaseController {
 
     public static function index() {
-        $items = Item::all();
-        View::make('item/index.html', array('items' => $items));
+        $categories = Category::all();
+        View::make('category/index.html', array('categories' => $categories));
     }
 
     public static function show($id) {
-        $item = Item::find($id);
-        View::make('item/show.html', array('item' => $item));
+        $category = Category::find($id);
+        View::make('category/show.html', array('category' => $category));
     }
 
     public static function create() {
-        View::make('item/new.html');
+        View::make('category/new.html');
     }
 
     public static function store() {
         $params = $_POST;
         $attributes = array(
             'name' => $params['nimi'],
-            'description' => $params['kuvaus'],
-            'pictureURL' => $params['kuva'],
-            'price' => $params['hinta']
+            'description' => $params['kuvaus']
         );
-        $item = new Item($attributes);
-        $errors = $item->errors();
+        $category = new Category($attributes);
+        $errors = $category->errors();
 
         if (count($errors) == 0) {
-            $item->save();
-            Redirect::to('/items/' . $item->id, array('message' => 'Uusi tuote on lisätty tietokantaan!'));
+            $category->save();
+            Redirect::to('/categories/' . $category->id, array('message' => 'Uusi tuoteluokka on lisätty tietokantaan!'));
         } else {
-            View::make('item/new.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('category/new.html', array('errors' => $errors, 'attributes' => $attributes));
         }
     }
 
@@ -40,30 +38,28 @@ class ItemController extends BaseController {
         $attributes = array(
             'id' => $id,
             'name' => $params['nimi'],
-            'description' => $params['kuvaus'],
-            'pictureURL' => $params['kuva'],
-            'price' => $params['hinta']
+            'description' => $params['kuvaus']
         );
-        $item = new Item($attributes);
-        $errors = $item->errors();
+        $category = new Category($attributes);
+        $errors = $category->errors();
 
         if (count($errors) == 0) {
-            $item->update();
-            Redirect::to('/items/' . $item->id, array('message' => 'Tuotetta on muokattu onnistuneesti!'));
+            $category->update();
+            Redirect::to('/categories/' . $category->id, array('message' => 'Tuoteluokkaa on muokattu onnistuneesti!'));
         } else {
-            View::make('item/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('category/edit.html', array('errors' => $errors, 'attributes' => $attributes));
         }
     }
 
     public static function edit($id) {
-        $item = Item::find($id);
-        View::make('item/edit.html', array('item' => $item));
+        $category = Category::find($id);
+        View::make('category/edit.html', array('category' => $category));
     }
 
     public static function destroy($id) {
-        $tuote = new Item(array('id' => $id));
+        $tuote = new Category(array('id' => $id));
         $tuote->destroy();
-        Redirect::to('/items', array('message' => 'Tuote on poistettu tietokannasta!'));
+        Redirect::to('/categories', array('message' => 'Tuoteluokka on poistettu tietokannasta!'));
     }
 
 }

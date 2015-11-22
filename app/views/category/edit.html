@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Lisää uusi tuote</h1>
+<h1>Lisää uusi tuoteluokka</h1>
 
 {% if errors %}
     <div class="alert alert-danger">
@@ -12,25 +12,14 @@
     </div>
 {% endif %}
 
-<form action="{{base_path}}/items/{{item.id}}/edit" method="post">
+<form action="{{base_path}}/categories/{{category.id}}/edit" method="post">
     <div class="form-group">
         <label for="nimi">Nimi</label>
-        <input type="text" class="form-control" value="{{item.name}}" name="nimi">
-    </div>
-    <div class="form-group">
-        <label for="hinta">Alin hinta</label>
-        <div class="input-group">
-            <input type="text" class="form-control" value="{{item.price}}" name="hinta">
-            <div class="input-group-addon">€</div>
-        </div>
+        <input type="text" class="form-control" value="{{category.name}}" name="nimi">
     </div>
     <div class="form-group">
         <label for="kuvaus">Kuvaus</label>
-        <textarea class="form-control" name="kuvaus" rows="5">{{item.description}}</textarea>
-    </div>
-    <div class="form-group">
-        <label for="kuva">Kuvan osoite</label>
-        <input type="text" class="form-control" name="kuva" value="{{item.pictureURL}}">
+        <textarea class="form-control" name="kuvaus" rows="5">{{category.description}}</textarea>
     </div>
     <button type="submit" class="btn btn-primary">Tallenna</button>
 </form>

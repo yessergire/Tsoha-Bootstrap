@@ -1,77 +1,89 @@
 <?php
 
-class Item extends BaseModel {
+class Category extends BaseModel {
 
-    public $id, $name, $description, $pictureURL, $price;
+    public $id, $name, $description;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_name', 'validate_price');
+        $this->validators = array('validate_name');
     }
 
     public static function all() {
-        $query = DB::connection()->prepare('Select * from Tuote');
+        $query = DB::connection()->prepare('Select * from TuoteLuokka');
         $query->execute();
+        $rows = $query->fetchAll();
+        $categories = array();
+        foreach ($rows as $row) {
+            $categories[] = new Category(array(
+                'id' => $row['id'],
+                'name' => $row['nimi'],
+                'description' => $row['kuvaus']
+            ));
+        }
+        return $categories;
+    }
+
+    public static function destroy_item_references($id) {
+        $query = DB::connection()->prepare('DELETE FROM TuotteenLuokat WHERE tuoteluokka_id = :id');
+        $query->execute(array('id' => $id));
+    }
+    
+    public static function get_items($id) {
+        $query = DB::connection()->prepare('SELECT tuote_id  FROM TuotteenLuokat '.
+                'WHERE tuoteluokka_id= :id');
+        $query->execute(array('id' => $id));
         $rows = $query->fetchAll();
         $items = array();
         foreach ($rows as $row) {
-            $items[] = new Item(array(
-                'id' => $row['id'],
-                'name' => $row['nimi'],
-                'description' => $row['kuvaus'],
-                'pictureURL' => $row['kuva'],
-                'price' => $row['hinta']
-            ));
+            $items[] = Item::find($row['tuote_id']);
         }
         return $items;
     }
 
-    public static function find($id) {
-        $query = DB::connection()->prepare('Select * from Tuote Where id = :id Limit 1');
+    public static function find($id, $get_items=true) {
+        $query = DB::connection()->prepare('Select * from TuoteLuokka Where id = :id Limit 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
 
         if ($row) {
-            $item = new Item(array(
+            $category = new Category(array(
                 'id' => $row['id'],
                 'name' => $row['nimi'],
-                'description' => $row['kuvaus'],
-                'pictureURL' => $row['kuva'],
-                'price' => $row['hinta']
+                'description' => $row['kuvaus']
             ));
-            return $item;
+            if ($get_items) {
+                $category->items = self::get_items($id);
+            }
+            return $category;
         }
         return null;
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO Tuote (nimi, kuvaus, kuva, hinta) ' .
-                'VALUES (:name, :description, :pictureURL, :price) RETURNING id');
+        $query = DB::connection()->prepare('INSERT INTO TuoteLuokka (nimi, kuvaus) ' .
+                'VALUES (:name, :description) RETURNING id');
         $query->execute(array(
             'name' => $this->name,
-            'description' => $this->description,
-            'pictureURL' => $this->pictureURL,
-            'price' => floatval($this->price)
+            'description' => $this->description
         ));
         $row = $query->fetch();
         $this->id = $row['id'];
     }
 
     public function update() {
-        $query = DB::connection()->prepare('UPDATE Tuote '.
-                'SET nimi = :name, kuvaus = :description, kuva = :pictureURL, hinta = :price ' .
-                'WHERE id = :id');
+        $query = DB::connection()->prepare('UPDATE TuoteLuokka '.
+                'SET nimi = :name, kuvaus = :description WHERE id = :id');
         $query->execute(array(
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'pictureURL' => $this->pictureURL,
-            'price' => $this->price
+            'description' => $this->description
         ));
     }
 
     public function destroy() {
-        $query = DB::connection()->prepare('DELETE FROM Tuote WHERE ID = :id');
+        self::destroy_item_references($this->id);
+        $query = DB::connection()->prepare('DELETE FROM TuoteLuokka WHERE ID = :id');
         $query->execute(array(
             'id' => $this->id
         ));
@@ -81,14 +93,6 @@ class Item extends BaseModel {
         $errors = array();
         if (!$this->validate_length('name', 3)) {
             $errors[] = 'Nimen pituuden tulee olla vähintään kolme merkkiä!';
-        }
-        return $errors;
-    }
-    
-    public function validate_price() {
-        $errors = array();
-        if (!$this->validate_min('price', 1)) {
-            $errors[] = 'Hinnan tulee olla vähintään 1€!';
         }
         return $errors;
     }

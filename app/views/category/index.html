@@ -8,32 +8,19 @@
 
 <div class="container">
     <div class="page-header">
-        <h1>Tuotelista</h1>
+        <h1>Tuoteluokat</h1>
     </div>
 
     <p>
-        <a href="{{base_path}}/items/new" class="btn btn-default">Lisää</a>
+        <a href="{{base_path}}/categories/new" class="btn btn-default">Lisää</a>
     </p>
-
-    <ul class="media-list list-group">
-        {% for item in items %}
-        <li class="media list-group-item">
-            <div class="media-left">
-                {% if item.pictureURL != null %}
-                <img src="{{item.pictureURL}}" width="350">
-                {% else %}
-                <img src="http://placehold.it/350x150">
-                {% endif %}
-            </div>
-            <div class="media-body">
-                <h3 class="media-heading">
-                    <a href="{{base_path}}/items/{{item.id}}">{{item.name}}</a>
-                </h3>
-                <p>Alin hinta: {{item.price}} €</p>
-            </div>
-        </li>
-        {% endfor %}
-    </ul>
+<div class="list-group">
+{% for category in categories %}
+    <a href="{{base_path}}/categories/{{category.id}}" class="list-group-item">
+        <h3 class="list-group-item-heading">{{category.name}}</h3>
+        <p class="list-group-item-text">{{category.description}}</p>
+    </a>
+{% endfor %}
 </div>
 
 {% endblock %}
