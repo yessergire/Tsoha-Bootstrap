@@ -26,7 +26,7 @@ class Item extends BaseModel {
         return $items;
     }
 
-    public static function get_categories($id) {
+    private static function get_categories($id) {
         $query = DB::connection()->prepare('SELECT tuoteluokka_id FROM TuotteenLuokat '.
                 'WHERE tuote_id = :id');
         $query->execute(array('id' => $id));
@@ -38,7 +38,7 @@ class Item extends BaseModel {
         return $categories;
     }
 
-    public static function destroy_category_references($id) {
+    private static function destroy_category_references($id) {
         $query = DB::connection()->prepare('DELETE FROM TuotteenLuokat WHERE tuote_id = :id');
         $query->execute(array('id' => $id));
     }

@@ -16,5 +16,12 @@ class HelloWorldController extends BaseController {
 
         Kint::dump($errors);
     }
+    
+    public static function logout() {
+        $_SESSION['admin'] = null;
+        $_SESSION['user'] = null;
+        Redirect::to('/', array('message' => 'Olet kirjautunut ulos!'));
+    }
+
 
 }

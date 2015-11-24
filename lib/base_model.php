@@ -27,11 +27,14 @@
       return $errors;
     }
     
-    public function validate_length($name, $length) {
+    public function validate_length($name, $length, $less_than=true) {
         if ($this->{$name} == null || $this->{$name} == '') {
             return false;
         }
-        if (strlen($this->{$name}) < $length) {
+        if ($less_than && strlen($this->{$name}) < $length) {
+            return false;
+        }
+        if (!$less_than && strlen($this->{$name}) >= $length) {
             return false;
         }
         return true;

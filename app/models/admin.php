@@ -1,6 +1,6 @@
 <?php
 
-class User extends BaseModel {
+class Admin extends BaseModel {
 
     public $id, $name, $email, $password;
 
@@ -14,13 +14,13 @@ class User extends BaseModel {
         $query->execute(array('email' => $email, 'password' => $password));
         $row = $query->fetch();
         if ($row) {
-            $user = new User(array(
+            $admin = new Admin(array(
                 'id' => $row['id'],
                 'name' => $row['nimi'],
                 'email' => $row['sähköposti'],
                 'password' => $row['salasana']
             ));
-            return $user;
+            return $admin;
         } else {
             return null;
         }
@@ -32,13 +32,30 @@ class User extends BaseModel {
         $row = $query->fetch();
 
         if ($row) {
-            $user = new User(array(
+            $admin = new Admin(array(
                 'id' => $row['id'],
                 'name' => $row['nimi'],
                 'email' => $row['sähköposti'],
                 'password' => $row['salasana']
             ));
-            return $user;
+            return $admin;
+        }
+        return null;
+    }
+
+    public static function findByEmail($email) {
+        $query = DB::connection()->prepare('Select * from Meklari Where sähköposti = :email Limit 1');
+        $query->execute(array('email' => $email));
+        $row = $query->fetch();
+
+        if ($row) {
+            $admin = new Admin(array(
+                'id' => $row['id'],
+                'name' => $row['nimi'],
+                'email' => $row['sähköposti'],
+                'password' => $row['salasana']
+            ));
+            return $admin;
         }
         return null;
     }

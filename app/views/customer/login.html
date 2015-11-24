@@ -11,11 +11,11 @@
 
   
   <!-- Kaikki lomakkeen elementit form-tagin sisään -->
-  <form method="post" action="{{base_path}}/login">
+  <form method="post" action="{{base_path}}/customer/login">
     <!-- Tekstikenttä käyttäjätunnukselle -->
     <div class="form-group">
       <label>Käyttäjätunnus</label>
-      <input type="text" name="email" class="form-control">
+      <input type="text" name="email" class="form-control" value="{{email}}">
     </div>
 
     <!-- Salasanakenttä salasanalle -->

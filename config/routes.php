@@ -4,14 +4,21 @@
     HelloWorldController::index();
   });
   
-  require 'item_routes.php';
-  require 'category_routes.php';
-  require 'user_routes.php';
-  //require 'customer_routes.php';
-  //require 'kauppa_routes?php';
+  require 'routes/admin.php';
+  require 'routes/customer.php';
+  
+  require 'routes/item.php';
+  require 'routes/category.php';
+  
+  require 'routes/auction.php';
+  require 'routes/bid.php';
   
   
 
   $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
+  });
+
+  $routes->post('/logout', function() {
+    HelloWorldController::logout();
   });

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% import "macros/forms.html" as forms %}
+
+{% if message != null %}
+<div class="alert alert-success">
+  {{message}}
+</div>
+{% endif %}
+
+<h1>{{customer.name}}</h1>
+
+<p>
+    {{forms.destroy_button("#{base_path}/customers/#{customer.id}")}}
+</p>
+
+
+{% endblock %}
