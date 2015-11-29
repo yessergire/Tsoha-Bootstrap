@@ -1,6 +1,6 @@
 <?php
 
-  $routes->get('/customers', function() {
+  $routes->get('/customers', 'check_logged_in', function() {
     CustomerController::index();
   });
   

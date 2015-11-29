@@ -1,4 +1,7 @@
 <?php
+  function check_logged_in(){
+    BaseController::check_logged_in();
+  }
 
   $routes->get('/', function() {
     HelloWorldController::index();
@@ -10,8 +13,8 @@
   require 'routes/item.php';
   require 'routes/category.php';
   
-  require 'routes/auction.php';
-  require 'routes/bid.php';
+  //require 'routes/auction.php';
+  //require 'routes/bid.php';
   
   
 

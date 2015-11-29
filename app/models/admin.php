@@ -9,6 +9,14 @@ class Admin extends BaseModel {
         $this->validators = array('validate_name', 'validate_email', 'validate_password');
     }
     
+    public function is_admin() {
+        return true;
+    }
+    
+    public function is_customer() {
+        return false;
+    }
+    
     public static function authenticate($email, $password) {
         $query = DB::connection()->prepare('Select * from Meklari WHERE sähköposti = :email AND salasana = :password Limit 1');
         $query->execute(array('email' => $email, 'password' => $password));

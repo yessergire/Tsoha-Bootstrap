@@ -58,11 +58,19 @@ class CustomerController extends BaseController {
     }
 
     public static function edit($id) {
+        $user = self::get_user_logged_in();
+        if ($user != null && $user->id != $id) {
+            return;
+        }
         $customer = Customer::find($id);
         View::make('customer/edit.html', array('customer' => $customer));
     }
 
     public static function destroy($id) {
+        $user = self::get_user_logged_in();
+        if ($user != null && $user->id != $id) {
+            return;
+        }
         $tuote = new Customer(array('id' => $id));
         $tuote->destroy();
         Redirect::to('/customers', array('message' => 'Tilisi on sulettu!'));

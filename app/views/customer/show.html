@@ -10,6 +10,9 @@
 {% endif %}
 
 <h1>{{customer.name}}</h1>
+<p><strong>Sähköposti:</strong> {{customer.email}}</p>
+<p><strong>Osoite: </strong> {{customer.address}}</p>
+<p><strong>Puhelin: </strong> {{customer.phone}}</p>
 
 <p>
     {{forms.destroy_button("#{base_path}/customers/#{customer.id}")}}

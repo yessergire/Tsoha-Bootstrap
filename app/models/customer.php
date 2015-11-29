@@ -8,6 +8,14 @@ class Customer extends BaseModel {
         parent::__construct($attributes);
         $this->validators = array('validate_name', 'validate_email', 'validate_password', 'validate_address', 'validate_phone');
     }
+    
+    public function is_admin() {
+        return false;
+    }
+    
+    public function is_customer() {
+        return true;
+    }
 
     public static function all() {
         $query = DB::connection()->prepare('Select * from Asiakas');
