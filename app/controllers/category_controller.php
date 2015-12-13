@@ -49,7 +49,7 @@ class CategoryController extends BaseController {
             $category->update();
             Redirect::to('/categories/' . $category->id, array('message' => 'Tuoteluokkaa on muokattu onnistuneesti!'));
         } else {
-            View::make('category/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('category/edit.html', array('errors' => $errors, 'category' => $category));
         }
     }
 

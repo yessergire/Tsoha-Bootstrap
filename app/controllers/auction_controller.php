@@ -47,8 +47,7 @@ class AuctionController extends BaseController {
             $auction->update();
             Redirect::to('/auctions/' . $auction->id, array('message' => 'Huutokauppaa on muokattu onnistuneesti!'));
         } else {
-            $item = Item::find($auction->item_id);
-            View::make('item/show.html', array('errors' => $errors, 'item' => $item));
+            View::make('auction/edit.html', array('errors' => $errors, 'auction' => $auction));
         }
     }
 

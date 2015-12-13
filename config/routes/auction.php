@@ -5,15 +5,15 @@
  * path: /auction/:id
  */
 
-  $routes->get('/auctions', function() {
+  $routes->get('/auctions', 'check_admin_logged_in', function() {
     AuctionController::index();
   });
   
-  $routes->post('/auctions', function() {
+  $routes->post('/auctions', 'check_admin_logged_in', function() {
     AuctionController::store();
   });
   
-  $routes->get('/auctions/:id', function($id) {
+  $routes->get('/auctions/:id', 'check_admin_logged_in', function($id) {
     AuctionController::show($id);
   });
   

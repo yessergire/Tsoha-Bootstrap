@@ -42,7 +42,7 @@
         
         {% if is_customer %}
         <td>
-            <form method="post" action="{{base_path}}/bids/{{customer.id}}/{{bid.auction.id}}/{{bid.time}}/destroy" class="form-inline">
+            <form method="post" action="{{base_path}}/bids/{{customer.id}}/{{bid.auction.id}}/{{bid.time}}/destroy" data-confirm="Oletko varma, että haluat poistaa?" class="form-inline destroy-form">
                 <button type="submit" class="btn btn-danger">Poista</button>
             </form>
         </td>

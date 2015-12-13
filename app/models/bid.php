@@ -2,7 +2,7 @@
 
 class Bid extends BaseModel {
 
-    public $user, $customer, $auction, $price, $time;
+    public $customer, $auction, $price, $time;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -16,7 +16,6 @@ class Bid extends BaseModel {
         $bids = array();
         foreach ($rows as $row) {
             $bids[] = new Bid(array(
-                'user' => $row['meklari_id'],
                 'customer' => Customer::find($row['asiakas_id']),
                 'auction' => $row['kauppa_id'],
                 'price' => $row['hinta'],
@@ -36,7 +35,6 @@ class Bid extends BaseModel {
         $bids = array();
         foreach ($rows as $row) {
             $bids[] = new Bid(array(
-                'user' => $row['meklari_id'],
                 'customer' => Customer::find($row['asiakas_id']),
                 'auction' => $row['kauppa_id'],
                 'price' => $row['hinta'],
@@ -55,7 +53,6 @@ class Bid extends BaseModel {
         $bids = array();
         foreach ($rows as $row) {
             $bids[] = new Bid(array(
-                'user' => $row['meklari_id'],
                 'auction' => Auction::find($row['kauppa_id'], $lazy=true),
                 'price' => $row['hinta'],
                 'time' => $row['ajankohta'],
@@ -77,9 +74,12 @@ class Bid extends BaseModel {
     }
 
     public function destroy() {
-        $query = DB::connection()->prepare('DELETE FROM Tarjous WHERE ajankohta = :time');
+        $query = DB::connection()->prepare('DELETE FROM Tarjous '.
+                'WHERE ajankohta = :time AND asiakas_id = :customer AND kauppa_id = :auction');
         $query->execute(array(
-            'time' => $this->time
+            'time' => $this->time,
+            'customer' => $this->customer,
+            'auction' => $this->auction
         ));
     }
 

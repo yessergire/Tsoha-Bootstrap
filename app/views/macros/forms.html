@@ -1,5 +1,5 @@
 {% macro destroy_button(link) %}
-    <form method="post" action="{{link}}/destroy" class="form-inline">
+    <form method="post" action="{{link}}/destroy" data-confirm="Oletko varma, että haluat poistaa?" class="form-inline destroy-form">
         <button type="submit" class="btn btn-danger">Poista</button>
     <a href="{{link}}/edit" class="btn btn-default">Muokkaa</a>
     </form>

@@ -11,17 +11,17 @@
 
 <h1>Huutokauppa tuotteelle <a href="{{base_path}}/items/{{auction.item.id}}">{{auction.item.name}}</a></h1>
 
-{% if is_admin %}
 <p>{{forms.destroy_button("#{base_path}/auctions/#{auction.id}")}}</p>
-{% endif %}
 
 <p><strong>Kauppa alkoi</strong> {{auction.starts | date("d.m.Y")}}</p>
 <p><strong>Kauppa päättyy</strong> {{auction.ends | date("d.m.Y")}}</p>
 
-{% if is_admin and not auction.closed %}
+{% if not auction.closed %}
 <form method="post" action="{{base_path}}/auctions/{{auction.id}}/close" class="form-inline">
     <button type="submit" class="btn btn-info">Sulje kauppa</button>
 </form>
+{% else %}
+<h3>Kauppa on suljettu.</h3>
 {% endif %}
 
 <h4><strong>Tarjoukset</strong></h4>
@@ -30,12 +30,18 @@
         <th>Ajankohta</th>
         <th>Hinta</th>
         <th>Tarjouksen tekijä</th>
+        <th></th>
     </tr>
     {% for bid in auction.bids %}
     <tr>
         <td>{{bid.time | date("d.m.Y H:i:s")}}</td>
         <td>{{bid.price}} €</td>
         <td><a href="{{base_path}}/customers/{{bid.customer.id}}">{{bid.customer.name}}</a></td>
+        <td>
+            <form method="post" action="{{base_path}}/bids/{{bid.customer.id}}/{{auction.id}}/{{bid.time}}/destroy" data-confirm="Oletko varma, että haluat poistaa?" class="form-inline destroy-form">
+                <button type="submit" class="btn btn-danger">Poista</button>
+            </form>
+        </td>
     </tr>
     {% endfor %}
 </table>

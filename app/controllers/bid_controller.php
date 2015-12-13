@@ -26,7 +26,7 @@ class BidController extends BaseController {
             'auction' => $auction,
             'time' => $time));
         $bid->destroy();
-        Redirect::to('/customers/' . $customer, array('message' => 'Tarjous on poistettu tietokannasta!'));
+        Redirect::to('/', array('message' => 'Tarjous on poistettu tietokannasta!'));
     }
 
 }

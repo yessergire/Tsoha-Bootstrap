@@ -49,8 +49,6 @@ CREATE TABLE Tarjous (
   REFERENCES Asiakas (id) ON DELETE CASCADE,
   kauppa_id INTEGER NOT NULL         -- Kaupan tunnus
   REFERENCES Kauppa (id) ON DELETE CASCADE,
-  meklari_id INTEGER                 -- Meklarin tunnus
-  REFERENCES Meklari (id),
   hinta      FLOAT NOT NULL,         -- Tarjottu hinta
   ajankohta  TIMESTAMP DEFAULT now() -- Tarjouksen ajankohta
 );

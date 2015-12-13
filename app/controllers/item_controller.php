@@ -57,7 +57,7 @@ class ItemController extends BaseController {
             }
             Redirect::to('/items/' . $item->id, array('message' => 'Tuotetta on muokattu onnistuneesti!'));
         } else {
-            View::make('item/edit.html', array('errors' => $errors, 'attributes' => $attributes, 'categories' => Category::all()));
+            View::make('item/edit.html', array('errors' => $errors, 'item' => $item, 'categories' => Category::all()));
         }
     }
 

@@ -12,26 +12,26 @@
     </div>
 {% endif %}
 
-<form action="{{base_path}}/customers" method="post">
+<form action="{{base_path}}/attributess" method="post">
     <div class="form-group">
         <label for="nimi">Nimi</label>
-        <input type="text" class="form-control" name="nimi">
+        <input type="text" class="form-control" name="nimi" value="{{attributes.name}}">
     </div>
     <div class="form-group">
         <label for="sähköposti">Sähköposti</label>
-        <input type="text" class="form-control" name="sähköposti">
+        <input type="text" class="form-control" name="sähköposti" value="{{attributes.email}}">
     </div>
     <div class="form-group">
         <label for="salasana">Salasana</label>
-        <input type="password" class="form-control" name="salasana">
+        <input type="password" class="form-control" name="salasana" value="{{attributes.password}}">
     </div>
     <div class="form-group">
         <label for="osoite">Osoite</label>
-        <input type="text" class="form-control" name="osoite">
+        <input type="text" class="form-control" name="osoite" value="{{attributes.address}}">
     </div>
     <div class="form-group">
         <label for="puhelin">Puhelin</label>
-        <input type="text" class="form-control" name="puhelin">
+        <input type="text" class="form-control" name="puhelin" value="{{attributes.phone}}">
     </div>
     <button type="submit" class="btn btn-primary">Tallenna</button>
 </form>

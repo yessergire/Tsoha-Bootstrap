@@ -51,7 +51,7 @@ class CustomerController extends BaseController {
             $customer->update();
             Redirect::to('/customers/' . $customer->id, array('message' => 'Tietojen muokkaus onnistui!'));
         } else {
-            View::make('customer/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('customer/edit.html', array('errors' => $errors, 'customer' => $customer));
         }
     }
 

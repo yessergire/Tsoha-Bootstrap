@@ -9,7 +9,7 @@ class Auction extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array();
+        $this->validators = array('validate_time');
     }
 
     public static function all() {
@@ -127,5 +127,14 @@ class Auction extends BaseModel {
         $query->execute(array('id' => $this->id));
         $row = $query->fetch();
         return $row['suurin'];
+    }
+
+    public function validate_time() {
+        $errors = array();
+        
+        if (strtotime($this->ends) <= strtotime($this->starts)) {
+            $errors[] = 'Huutokauppa ei voi päättyä ennen kuin se on alkanut!';
+        }
+        return $errors;
     }
 }
