@@ -27,7 +27,7 @@
 </p>
 {% endif %}
 
-{% if si_admin and item.auction %}
+{% if is_admin and item.auction %}
 <p><a href="{{base_path}}/auctions/{{item.auction.id}}">Seurantalista</a></p>
 {% endif %}
 
