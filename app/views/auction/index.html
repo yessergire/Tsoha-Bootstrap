@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+{% if message != null %}
+<div class="alert alert-success">
+  {{message}}
+</div>
+{% endif %}
+
+<div class="container">
+    <div class="page-header">
+        <h1>Huutokaupat</h1>
+    </div>
+
+<table  class="table">
+    <tr>
+        <th>Alkaa</th>
+        <th>Päättyy</th>
+        <th>Tuote</th>
+        <th></th>
+    </tr>
+    {% for auction in auctions %}
+    <tr>
+        <td>{{auction.starts | date("d.m.Y")}}</td>
+        <td>{{auction.starts | date("d.m.Y")}}</td>
+        <td><a href="{{base_path}}/items/{{auction.item.id}}">{{auction.item.name}}</a></td>
+        <td><a href="{{base_path}}/auctions/{{auction.id}}">Seurantalista</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

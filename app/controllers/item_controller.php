@@ -3,13 +3,11 @@
 class ItemController extends BaseController {
 
     public static function index() {
-        $items = Item::all();
-        View::make('item/index.html', array('items' => $items));
+        View::make('item/index.html', array('items' => Item::all()));
     }
 
     public static function show($id) {
-        $item = Item::find($id);
-        View::make('item/show.html', array('item' => $item));
+        View::make('item/show.html', array('item' => Item::find($id)));
     }
 
     public static function create() {
@@ -34,7 +32,7 @@ class ItemController extends BaseController {
             }
             Redirect::to('/items/' . $item->id, array('message' => 'Uusi tuote on lisätty tietokantaan!'));
         } else {
-            View::make('item/new.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('item/new.html', array('errors' => $errors, 'attributes' => $attributes, 'categories' => Category::all()));
         }
     }
 
@@ -59,7 +57,7 @@ class ItemController extends BaseController {
             }
             Redirect::to('/items/' . $item->id, array('message' => 'Tuotetta on muokattu onnistuneesti!'));
         } else {
-            View::make('item/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+            View::make('item/edit.html', array('errors' => $errors, 'attributes' => $attributes, 'categories' => Category::all()));
         }
     }
 
@@ -69,8 +67,8 @@ class ItemController extends BaseController {
     }
 
     public static function destroy($id) {
-        $tuote = new Item(array('id' => $id));
-        $tuote->destroy();
+        $item = new Item(array('id' => $id));
+        $item->destroy();
         Redirect::to('/items', array('message' => 'Tuote on poistettu tietokannasta!'));
     }
 

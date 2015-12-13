@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Lisää uusi tuote</h1>
+<h1>Muokkaa tuotetta: {{item.name}}</h1>
 
 {% if errors %}
     <div class="alert alert-danger">
@@ -36,11 +36,7 @@
         <label>Tuoteluokat</label>
         <select class="form-control" name="categories[]" multiple="">
             {% for category in categories %}
-                {% if item in category.items %}
-                <option value="{{category.id}}" selected="">{{category.name}}</option>
-                {% else %}
                 <option value="{{category.id}}">{{category.name}}</option>
-                {% endif %}
             {% endfor %}
         </select>
     </div>

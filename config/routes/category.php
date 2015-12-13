@@ -4,11 +4,11 @@
     CategoryController::index();
   });
   
-  $routes->post('/categories', 'check_logged_in', function() {
+  $routes->post('/categories', 'check_admin_logged_in', function() {
     CategoryController::store();
   });
   
-  $routes->get('/categories/new', 'check_logged_in', function() {
+  $routes->get('/categories/new', 'check_admin_logged_in', function() {
     CategoryController::create();
   });
   
@@ -16,14 +16,14 @@
     CategoryController::show($id);
   });
   
-  $routes->get('/categories/:id/edit', 'check_logged_in', function($id) {
+  $routes->get('/categories/:id/edit', 'check_admin_logged_in', function($id) {
     CategoryController::edit($id);
   });
   
-  $routes->post('/categories/:id/edit', 'check_logged_in', function($id) {
+  $routes->post('/categories/:id/edit', 'check_admin_logged_in', function($id) {
     CategoryController::update($id);
   });
   
-  $routes->post('/categories/:id/destroy', 'check_logged_in', function($id) {
+  $routes->post('/categories/:id/destroy', 'check_admin_logged_in', function($id) {
     CategoryController::destroy($id);
   });

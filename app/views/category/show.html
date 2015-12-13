@@ -12,9 +12,11 @@
 
 <h1>{{category.name}}</h1>
 
+{% if is_admin %}
 <p>
     {{forms.destroy_button("#{base_path}/categories/#{category.id}")}}
 </p>
+{% endif %}
 
 <p>{{category.description}}</p>
 

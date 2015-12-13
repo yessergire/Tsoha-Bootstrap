@@ -10,13 +10,47 @@
 {% endif %}
 
 <h1>{{customer.name}}</h1>
-<p><strong>Sähköposti:</strong> {{customer.email}}</p>
-<p><strong>Osoite: </strong> {{customer.address}}</p>
-<p><strong>Puhelin: </strong> {{customer.phone}}</p>
 
 <p>
     {{forms.destroy_button("#{base_path}/customers/#{customer.id}")}}
 </p>
 
+<p><strong>Sähköposti:</strong> {{customer.email}}</p>
+<p><strong>Osoite: </strong> {{customer.address}}</p>
+<p><strong>Puhelin: </strong> {{customer.phone}}</p>
+
+
+{% if customer.bids %}
+<hr>
+<h4><strong>Tekemäsi tarjoukset</strong></h4>
+<table  class="table">
+    <tr>
+        <th>Huutokauppa</th>
+        <th>Tarjouksen tekohetki</th>
+        <th>Hinta</th>
+        <th></th>
+    </tr>
+    {% for bid in customer.bids %}
+    <tr>
+        {% if is_admin %}
+        <td><a href="{{base_path}}/auctions/{{bid.auction.id}}">{{bid.auction.item.name}}</a></td>
+        {% else %}
+        <td><a href="{{base_path}}/items/{{bid.auction.item.id}}">{{bid.auction.item.name}}</a></td>
+        {% endif %}
+        <td>{{bid.time | date("d.m.Y H:i:s")}}</td>
+        <td>{{bid.price}} €</td>
+        
+        {% if is_customer %}
+        <td>
+            <form method="post" action="{{base_path}}/bids/{{customer.id}}/{{bid.auction.id}}/{{bid.time}}/destroy" class="form-inline">
+                <button type="submit" class="btn btn-danger">Poista</button>
+            </form>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+
+{% endif %}
 
 {% endblock %}

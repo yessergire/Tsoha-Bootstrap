@@ -13,9 +13,11 @@
         <h1>Tuotelista</h1>
     </div>
 
+{% if is_admin %}
     <p>
         <a href="{{base_path}}/items/new" class="btn btn-default">Lisää</a>
     </p>
+{% endif %}
 
     {{item_list.list(base_path, items)}}
 </div>

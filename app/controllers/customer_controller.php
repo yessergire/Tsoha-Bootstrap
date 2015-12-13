@@ -3,13 +3,11 @@
 class CustomerController extends BaseController {
 
     public static function index() {
-        $customers = Customer::all();
-        View::make('customer/index.html', array('customers' => $customers));
+        View::make('customer/index.html', array('customers' => Customer::all()));
     }
 
     public static function show($id) {
-        $customer = Customer::find($id);
-        View::make('customer/show.html', array('customer' => $customer));
+        View::make('customer/show.html', array('customer' => Customer::find($id)));
     }
 
     public static function create() {
@@ -66,14 +64,10 @@ class CustomerController extends BaseController {
         View::make('customer/edit.html', array('customer' => $customer));
     }
 
-    public static function destroy($id) {
-        $user = self::get_user_logged_in();
-        if ($user != null && $user->id != $id) {
-            return;
-        }
-        $tuote = new Customer(array('id' => $id));
-        $tuote->destroy();
-        Redirect::to('/customers', array('message' => 'Tilisi on sulettu!'));
+    public static function destroy($id) {    
+        $customer = new Customer(array('id' => $id));
+        $customer->destroy();
+        Redirect::to('/customers', array('message' => 'Tili on sulettu!'));
     }
 
     public static function login() {
@@ -81,10 +75,9 @@ class CustomerController extends BaseController {
     }
     
     public static function handle_login() {
+        self::clear_session();
         $params = $_POST;
         $customer = Customer::authenticate($params['email'], $params['password']);
-        $_SESSION['admin'] = null;
-        $_SESSION['user'] = null;
 
         if (!$customer) {
             View::make('customer/login.html', array('message' => 'Väärä käyttäjätunnus tai salasana!', 'email' => $params['email']));

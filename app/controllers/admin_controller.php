@@ -6,9 +6,8 @@ class AdminController extends BaseController {
     }
 
     public static function handle_login() {
+        self::clear_session();
         $params = $_POST;
-        $_SESSION['admin'] = null;
-        $_SESSION['user'] = null;
         $admin = Admin::authenticate($params['email'], $params['password']);
 
         if (!$admin) {

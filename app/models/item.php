@@ -15,13 +15,15 @@ class Item extends BaseModel {
         $rows = $query->fetchAll();
         $items = array();
         foreach ($rows as $row) {
-            $items[] = new Item(array(
+            $item = new Item(array(
                 'id' => $row['id'],
                 'name' => $row['nimi'],
                 'description' => $row['kuvaus'],
                 'pictureURL' => $row['kuva'],
                 'price' => $row['hinta']
             ));
+            $item->auction = Auction::findByItem($item->id);
+            $items[] = $item;
         }
         return $items;
     }
@@ -53,7 +55,7 @@ class Item extends BaseModel {
         }
     }
 
-    public static function find($id) {
+    public static function find($id, $lazy = false) {
         $query = DB::connection()->prepare('Select * from Tuote Where id = :id Limit 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
@@ -66,7 +68,10 @@ class Item extends BaseModel {
                 'pictureURL' => $row['kuva'],
                 'price' => $row['hinta']
             ));
-            $item->categories = self::get_categories($id);
+            if (!$lazy) {
+                $item->categories = self::get_categories($id);
+                $item->auction = Auction::findByItem($id);
+            }
             return $item;
         }
         return null;

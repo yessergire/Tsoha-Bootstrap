@@ -7,17 +7,12 @@ class HelloWorldController extends BaseController {
     }
 
     public static function sandbox() {
-        $tv = new Item(array(
-            'name' => 'tv',
-            'price' => 0,
-            'description' => 'none'
-        ));
-        $errors = $tv->errors();
-
-        Kint::dump($errors);
+        
+            
+        Kint::dump(Auction::find(1));
     }
     
-    public static function logout() {
+    public static function clear_session() {
         $_SESSION['admin'] = null;
         $_SESSION['user'] = null;
         Redirect::to('/', array('message' => 'Olet kirjautunut ulos!'));

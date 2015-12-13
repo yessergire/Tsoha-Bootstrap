@@ -17,5 +17,5 @@ INSERT INTO Kauppa (tuote_id, alkaa, päättyy)
 VALUES (1, now(), now() + interval '1 month');
 
 
-INSERT INTO Tarjous (asiakas_id, kauppa_id, hinta, ajankohta)
-VALUES (1, 1, 350, now());
+INSERT INTO Tarjous (asiakas_id, kauppa_id, hinta)
+VALUES (1, 1, 350);

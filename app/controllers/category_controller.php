@@ -3,13 +3,11 @@
 class CategoryController extends BaseController {
 
     public static function index() {
-        $categories = Category::all();
-        View::make('category/index.html', array('categories' => $categories));
+        View::make('category/index.html', array('categories' => Category::all()));
     }
 
     public static function show($id) {
-        $category = Category::find($id);
-        View::make('category/show.html', array('category' => $category));
+        View::make('category/show.html', array('category' => Category::find($id)));
     }
 
     public static function create() {
@@ -33,6 +31,10 @@ class CategoryController extends BaseController {
         }
     }
 
+    public static function edit($id) {
+        View::make('category/edit.html', array('category' => Category::find($id)));
+    }
+    
     public static function update($id) {
         $params = $_POST;
         $attributes = array(
@@ -51,14 +53,9 @@ class CategoryController extends BaseController {
         }
     }
 
-    public static function edit($id) {
-        $category = Category::find($id);
-        View::make('category/edit.html', array('category' => $category));
-    }
-
     public static function destroy($id) {
-        $tuote = new Category(array('id' => $id));
-        $tuote->destroy();
+        $category = new Category(array('id' => $id));
+        $category->destroy();
         Redirect::to('/categories', array('message' => 'Tuoteluokka on poistettu tietokannasta!'));
     }
 

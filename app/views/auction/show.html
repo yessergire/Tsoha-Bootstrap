@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% import "macros/forms.html" as forms %}
+
+{% if message != null %}
+<div class="alert alert-success">
+  {{message}}
+</div>
+{% endif %}
+
+<h1>Huutokauppa tuotteelle <a href="{{base_path}}/items/{{auction.item.id}}">{{auction.item.name}}</a></h1>
+
+{% if is_admin %}
+<p>{{forms.destroy_button("#{base_path}/auctions/#{auction.id}")}}</p>
+{% endif %}
+
+<p><strong>Kauppa alkoi</strong> {{auction.starts | date("d.m.Y")}}</p>
+<p><strong>Kauppa päättyy</strong> {{auction.ends | date("d.m.Y")}}</p>
+
+{% if is_admin and not auction.closed %}
+<form method="post" action="{{base_path}}/auctions/{{auction.id}}/close" class="form-inline">
+    <button type="submit" class="btn btn-info">Sulje kauppa</button>
+</form>
+{% endif %}
+
+<h4><strong>Tarjoukset</strong></h4>
+<table  class="table">
+    <tr>
+        <th>Ajankohta</th>
+        <th>Hinta</th>
+        <th>Tarjouksen tekijä</th>
+    </tr>
+    {% for bid in auction.bids %}
+    <tr>
+        <td>{{bid.time | date("d.m.Y H:i:s")}}</td>
+        <td>{{bid.price}} €</td>
+        <td><a href="{{base_path}}/customers/{{bid.customer.id}}">{{bid.customer.name}}</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

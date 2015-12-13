@@ -11,9 +11,12 @@
         <h1>Tuoteluokat</h1>
     </div>
 
+{% if is_admin %}
     <p>
         <a href="{{base_path}}/categories/new" class="btn btn-default">Lisää</a>
     </p>
+{% endif %}
+
 <div class="list-group">
 {% for category in categories %}
     <a href="{{base_path}}/categories/{{category.id}}" class="list-group-item">

@@ -9,11 +9,28 @@
 </div>
 {% endif %}
 
+{% if errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for error in errors %}
+            <li>{{error}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
 <h1>{{item.name}}</h1>
 
+{% if is_admin %}
 <p>
     {{forms.destroy_button("#{base_path}/items/#{item.id}")}}
 </p>
+{% endif %}
+
+{% if si_admin and item.auction %}
+<p><a href="{{base_path}}/auctions/{{item.auction.id}}">Seurantalista</a></p>
+{% endif %}
+
 <div class="media panel panel-default">
     <div class="media-left">
         {% if item.pictureURL != null %}
@@ -24,21 +41,55 @@
     </div>
     <div class="media-body">
         <div class="media-heading">
-            <h3><strong>Hinta:</strong> {{item.price}} €</h3>
+            {% if item.auction.max_price %}
+                <h3><strong>Korkein tarjous:</strong> {{item.auction.max_price}} €</h3>
+            {% else %}
+                <h3><strong>Alin hinta:</strong> {{item.price}} €</h3>
+            {% endif %}
         </div>
-        <form class="form-inline">
+        
+        {% if item.auction %}
+            <p><strong>Huutokauppa alkoi</strong>: {{item.auction.starts | date("d.m.Y")}}</p>
+            <p><strong>Huutokauppa päättyy</strong>: {{item.auction.ends | date("d.m.Y")}}</p>
+        {% endif %}
+        
+        {% if is_customer and item.auction and item.auction.can_bid %}
+        <form method="post" action="{{base_path}}/bids" class="form-inline">
+        <input type="hidden" id="tuote_id" name="tuote_id" value="{{item.id}}">
+        <input type="hidden" id="kauppa_id" name="kauppa_id" value="{{item.auction.id}}">
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="exampleInputAmount" value="{{item.price + 10}}">
+            {% if item.auction.max_price %}
+                    <input type="text" class="form-control" name="hinta" id="hinta" value="{{item.auction.max_price + 10}}">
+            {% else %}
+                    <input type="text" class="form-control" name="hinta" id="hinta" value="{{item.price + 10}}">
+            {% endif %}
                     <div class="input-group-addon">€</div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Jätä tarjous</button>
         </form>
+        {% endif %}
     </div>
 
 </div>
 <p>{{item.description}}</p>
+
+
+{% if is_admin and not item.auction %}
+<form method="post" action="{{base_path}}/auctions" class="form-inline">
+        <input type="hidden" id="tuote_id" name="tuote_id" value="{{item.id}}">
+        <div class="form-group">
+            <div class="input-group">
+                <input type="date" class="form-control" id="alkaa" name="alkaa">
+            </div>
+            <div class="input-group">
+                <input type="date" class="form-control" id="päättyy" name="päättyy">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Avaa huutokauppa</button>
+    </form>
+{% endif %}
 
 {% if item.categories %}
 <h3>Tuoteluokat:</h3>

@@ -69,6 +69,7 @@ class Customer extends BaseModel {
                 'address' => $row['osoite'],
                 'phone' => $row['puhelin']
             ));
+            $customer->bids = Bid::findByCustomer($customer->id);
             return $customer;
         }
         return null;
@@ -123,7 +124,6 @@ class Customer extends BaseModel {
     }
 
     public function destroy() {
-        self::destroy_category_references($this->id);
         $query = DB::connection()->prepare('DELETE FROM Asiakas WHERE ID = :id');
         $query->execute(array(
             'id' => $this->id

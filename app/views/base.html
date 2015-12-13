@@ -7,7 +7,7 @@
 
         <title>
             {% block title %}
-            Tietokantasovellus
+            Huutokauppa
             {% endblock %}
         </title>
 
@@ -42,6 +42,7 @@
                         <li><a href="{{base_path}}/items">Tuotteet</a></li>
                         <li><a href="{{base_path}}/categories">Tuoteluokat</a></li>
                             {% if user_logged_in.is_admin %}
+                        <li><a href="{{base_path}}/auctions">Huutokaupat</a></li>
                         <li><a href="{{base_path}}/customers">Asiakkaat</a></li>
                             {% endif %}
                     </ul>

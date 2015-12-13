@@ -17,6 +17,15 @@
         if(method_exists('BaseController', 'get_user_logged_in')){
           $content['user_logged_in'] = BaseController::get_user_logged_in();
         }
+        
+        if(method_exists('BaseController', 'is_admin')){
+          $content['is_admin'] = BaseController::is_admin();
+        }
+        
+        if(method_exists('BaseController', 'is_customer')){
+          $content['is_customer'] = BaseController::is_customer();
+        }
+        
 
         // Tulostetaan Twig:n renderöimä näkymä
         echo $twig->render($view, $content);

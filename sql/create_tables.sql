@@ -30,26 +30,27 @@ CREATE TABLE TuoteLuokka (
 
 CREATE TABLE TuotteenLuokat (
   tuote_id INTEGER NOT NULL        -- Tuotetunnus
-  REFERENCES Tuote (id),
+  REFERENCES Tuote (id) ON DELETE CASCADE,
   tuoteluokka_id INTEGER NOT NULL  -- TuoteLuokan tunnus
-  REFERENCES TuoteLuokka (id)
+  REFERENCES TuoteLuokka (id) ON DELETE CASCADE
 );
 
 CREATE TABLE Kauppa (
   id SERIAL  PRIMARY KEY,
   tuote_id INTEGER NOT NULL        -- Tuotetunnus
-  REFERENCES Tuote (id),
+  REFERENCES Tuote (id) ON DELETE CASCADE,
+  suljettu BOOLEAN DEFAULT FALSE,
   alkaa      TIMESTAMP NOT NULL,   -- milloin kauppa alkaa
   päättyy    TIMESTAMP NOT NULL    -- milloin kauppa alkaa
 );
 
 CREATE TABLE Tarjous (
-  asiakas_id INTEGER NOT NULL       -- Asiakastunnus
-  REFERENCES Asiakas (id),
-  meklari_id INTEGER                -- Meklarin tunnus
+  asiakas_id INTEGER NOT NULL        -- Asiakastunnus
+  REFERENCES Asiakas (id) ON DELETE CASCADE,
+  kauppa_id INTEGER NOT NULL         -- Kaupan tunnus
+  REFERENCES Kauppa (id) ON DELETE CASCADE,
+  meklari_id INTEGER                 -- Meklarin tunnus
   REFERENCES Meklari (id),
-  kauppa_id INTEGER NOT NULL        -- Kaupan tunnus
-  REFERENCES Kauppa (id),
-  hinta      FLOAT NOT NULL,        -- Tarjottu hinta
-  ajankohta  TIMESTAMP NOT NULL     -- Tarjouksen ajankohta
+  hinta      FLOAT NOT NULL,         -- Tarjottu hinta
+  ajankohta  TIMESTAMP DEFAULT now() -- Tarjouksen ajankohta
 );

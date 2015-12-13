@@ -13,7 +13,16 @@
                 <h3 class="media-heading">
                     <a href="{{base_path}}/items/{{item.id}}">{{item.name}}</a>
                 </h3>
-                <p>Alin hinta: {{item.price}} €</p>
+            {% if item.auction.max_price %}
+                <p><strong>Korkein tarjous:</strong> {{item.auction.max_price}} €</p>
+            {% else %}
+                <p><strong>Alin hinta:</strong> {{item.price}} €</p>
+            {% endif %}
+            
+            {% if item.auction %}
+                <p><strong>Huutokauppa alkoi</strong>: {{item.auction.starts | date("d.m.Y")}}</p>
+                <p><strong>Huutokauppa päättyy</strong>: {{item.auction.ends | date("d.m.Y")}}</p>
+            {% endif %}
             </div>
         </li>
         {% endfor %}
